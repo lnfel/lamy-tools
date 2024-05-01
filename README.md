@@ -8,6 +8,8 @@ Run the following command:
 
 ```sh
 npx create-turbo@latest -e with-svelte
+# or with pnpm
+pnpm dlx create-turbo@latest -e with-svelte
 ```
 
 ## What's inside?
@@ -30,3 +32,7 @@ This Turborepo has some additional tools already setup for you:
 - [TypeScript](https://www.typescriptlang.org/) for static type checking
 - [ESLint](https://eslint.org/) for code linting
 - [Prettier](https://prettier.io) for code formatting
+
+### Notes
+Elysia mono repo sample:
+https://github.com/SaltyAom/elysia-monorepo-example/tree/main
