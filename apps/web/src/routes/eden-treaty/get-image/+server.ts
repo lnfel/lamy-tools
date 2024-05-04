@@ -1,4 +1,4 @@
-import { api } from 'lib'
+import { api } from 'api-eden'
 
 export const GET = async ({ setHeaders }) => {
     const response = await api.index.get({

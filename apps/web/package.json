@@ -18,12 +18,13 @@
 		"@elysiajs/eden": "^1.0.12",
 		"@repo/ui": "workspace:*",
 		"api": "workspace:*",
-		"lib": "workspace:*"
+		"api-eden": "workspace:*"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.42.1",
 		"@repo/eslint-config": "workspace:*",
 		"@sveltejs/adapter-auto": "^3.1.1",
+		"@sveltejs/adapter-vercel": "^5.3.0",
 		"@sveltejs/kit": "^2.5.2",
 		"@sveltejs/vite-plugin-svelte": "^3.0.2",
 		"@typescript-eslint/eslint-plugin": "^7.1.0",

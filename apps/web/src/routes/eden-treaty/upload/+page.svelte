@@ -1,6 +1,6 @@
 <script lang="ts">
     import { enhance } from "$app/forms"
-    import { api } from 'lib'
+    import { api } from 'api-eden'
 
     import type { SubmitFunction } from "@sveltejs/kit"
 
