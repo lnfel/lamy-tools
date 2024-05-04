@@ -1,0 +1,21 @@
+{
+    "name": "api-eden",
+    "version": "1.0.0",
+    "main": "./src/index.ts",
+    "types": "./src/index.ts",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lint": "eslint *.ts*"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@elysiajs/eden": "^1.0.12"
+    },
+    "devDependencies": {
+        "api": "workspace:*",
+        "elysia": "^1.0.15",
+        "eslint": "^8.57.0"
+    }
+}
