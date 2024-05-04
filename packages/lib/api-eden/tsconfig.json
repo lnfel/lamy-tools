@@ -1,0 +1,4 @@
+{
+    "extends": "../../tsconfig/svelte-library.json",
+    "include": ["."]
+}
