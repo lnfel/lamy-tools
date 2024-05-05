@@ -1,1 +1,1 @@
-export { api, apiTreaty, fetch } from './eden'
+export * from './eden'
