@@ -1,4 +1,4 @@
-import { api } from 'api-eden'
+import { api } from '$lib/lamy-api/index.js'
 
 export const GET = async ({ setHeaders }) => {
     // const { data, response, headers } = await api.index.get({
