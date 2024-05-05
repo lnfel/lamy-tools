@@ -4,7 +4,7 @@ import { staticPlugin } from '@elysiajs/static'
 import sharp from "sharp"
 
 export const app = new Elysia()
-    .use(staticPlugin())
+    .use(await staticPlugin())
     .use(cors())
     .get("/", async ({ set }) => {
         const image = Bun.file('public/suisei_august_2023.webp')
