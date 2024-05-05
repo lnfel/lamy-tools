@@ -1,6 +1,7 @@
 <script lang="ts">
     import { enhance } from "$app/forms"
-    import { api } from 'api-eden'
+    import { api } from "$lib/lamy-api"
+    // import { api } from 'api-eden'
 
     import type { SubmitFunction } from "@sveltejs/kit"
 
@@ -8,7 +9,7 @@
         const response = await api.upload.post({
             getRaw: true,
             $fetch: {
-                mode: 'cors'
+                mode: 'no-cors'
             },
             image: formData.get('file') as File | FileList,
         }) as unknown as Response

@@ -25,6 +25,7 @@ const config = {
                 "connect-src": [
                     'self',
                     'data:',
+                    'https://lamy-tools-api.vercel.app',
                 ],
                 "frame-src": [
                     'self',
