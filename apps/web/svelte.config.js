@@ -16,7 +16,32 @@ const config = {
 		adapter: adapter(),
 		csrf: {
 			checkOrigin: false
-		}
+		},
+        csp: {
+            directives: {
+                "default-src": [
+                    'self'
+                ],
+                "connect-src": [
+                    'self',
+                    'data:',
+                ],
+                "frame-src": [
+                    'self',
+                ],
+                "script-src": [
+                    'self',
+                ],
+                "style-src": [
+                    'self',
+                    'unsafe-inline',
+                ],
+                "img-src": [
+                    'self',
+                    'data:',
+                ],
+            }
+        }
 	}
 };
 
