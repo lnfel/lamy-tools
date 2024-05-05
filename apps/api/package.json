@@ -8,7 +8,8 @@
   "main": "./src/index.ts",
   "dependencies": {
     "@elysiajs/cors": "^1.0.2",
-    "elysia": "latest",
+    "@elysiajs/static": "^1.0.3",
+    "elysia": "1.0.15",
     "sharp": "^0.33.3"
   },
   "devDependencies": {

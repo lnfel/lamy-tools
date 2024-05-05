@@ -1,35 +1,24 @@
 import { Elysia, t } from "elysia"
 import { cors } from '@elysiajs/cors'
+import { staticPlugin } from '@elysiajs/static'
 import sharp from "sharp"
 
 export const app = new Elysia()
+    .use(staticPlugin())
     .use(cors())
-    .get("/test", () => "Hi")
     .get("/", async ({ set }) => {
-        const image = Bun.file('suisei_august_2023.webp')
+        const image = Bun.file('public/suisei_august_2023.webp')
         // const imageSharp = await sharp(await image.arrayBuffer())
         //     .webp()
         //     .toBuffer()
         set.headers = {
-            // "Accept-Ranges": "bytes",
             "Content-Disposition": `filename="${image.name}"`,
-            // "Content-Length": image.size.toString(),
-            // "Content-Range": `0-${image.size - 1}/${image.size}`,
             "Content-Type": image.type
-            // "Content-Type": 'application/octet-stream'
         }
-        // set.headers = {
-        //     "Content-Type": image.type
-        // }
         // return imageSharp
-        // return new File([await image.arrayBuffer()], `some-image.${image.type.replace('image/', '')}`)
         return new Blob([await image.arrayBuffer()], { type: image.type })
         // return await image.arrayBuffer()
         // return image
-    }, {
-        // response: {
-        //     200: t.File()
-        // }
     })
     .post('/upload', async ({ body, set }) => {
         console.log({ body })
