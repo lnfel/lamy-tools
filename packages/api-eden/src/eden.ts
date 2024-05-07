@@ -5,7 +5,7 @@ import type { App } from 'api'
 export class LamyAPI {
     domain
 
-    constructor(domain = 'http://0.0.0.0:3000/') {
+    constructor(domain = 'http://localhost:3000/') {
         this.domain = domain
     }
 
@@ -22,8 +22,8 @@ export class LamyAPI {
     }
 }
 
-export const api = edenTreaty<App>('http://0.0.0.0:3000/')
+export const api = edenTreaty<App>('http://localhost:3000/')
 // export const api = treaty(app)
 // export const api = {}
-export const apiTreaty = treaty<App>('http://0.0.0.0:3000/')
-export const fetch = edenFetch<App>('http://0.0.0.0:3000/')
+export const apiTreaty = treaty<App>('http://localhost:3000/')
+export const fetch = edenFetch<App>('http://localhost:3000/')
