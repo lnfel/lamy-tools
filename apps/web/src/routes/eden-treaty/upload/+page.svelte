@@ -14,12 +14,6 @@
             // },
             image: formData.get('file') as File | FileList,
         }) as unknown as Response
-
-        console.log(response)
-        // console.log((await response.formData()).get('image') as Blob)
-        for (const pair of response.headers.entries()) {
-            console.log(`${pair[0]}: ${pair[1]}`)
-        }
         
         const image = (await response.formData()).get('image') as Blob
         console.log(image)
