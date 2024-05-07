@@ -20,21 +20,34 @@ export const app = new Elysia()
         // return await image.arrayBuffer()
         // return image
     })
-    .post('/upload', async ({ body, set }) => {
-        console.log({ body })
+    .post('/upload', async ({ body: { image }, set }) => {
+        console.log({ image, name: image.name })
         // set.headers = {
-        //     "Content-Disposition": `filename="${body.image.name}"`,
-        //     "Content-Type": body.image.type
+        //     "Content-Disposition": `filename="${image.name}"`,
+        //     "Content-Type": image.type
         // }
+
         const formData = new FormData()
-        formData.append('image', body.image)
-        // return new Blob([await body.image.arrayBuffer()], { type: body.image.type })
-        // return body.image
+        formData.append('image', new Blob([await image.arrayBuffer()], { type: image.type }), image.name)
         return formData
+        // return new Response(formData)
+        // return new Response(Buffer.from(await image.arrayBuffer()))
+
+        // return new Blob([await image.arrayBuffer()], { type: image.type })
+        // return new Response(new Blob([await image.arrayBuffer()], { type: image.type }), {
+        //     headers: {
+        //         "Content-Disposition": `filename='${image.name}'`,
+        //         "Content-Type": image.type
+        //     }
+        // })
+        // return image
     }, {
         body: t.Object({
             image: t.File()
-        })
+        }),
+        afterHandle(context) {
+            console.log(context.response)
+        }
     })
     .listen(3000)
 

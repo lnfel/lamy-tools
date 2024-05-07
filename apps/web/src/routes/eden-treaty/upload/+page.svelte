@@ -6,16 +6,24 @@
     import type { SubmitFunction } from "@sveltejs/kit"
 
     const upload: SubmitFunction = async ({ formData, cancel }) => {
+        // console.log(formData.get('file'))
         const response = await api.upload.post({
             getRaw: true,
-            $fetch: {
-                mode: 'no-cors'
-            },
+            // $fetch: {
+            //     mode: 'no-cors'
+            // },
             image: formData.get('file') as File | FileList,
         }) as unknown as Response
 
-        // console.log((await response.formData()).get('image'))
-        preview.src = URL.createObjectURL((await response.formData()).get('image') as Blob)
+        console.log(response)
+        // console.log((await response.formData()).get('image') as Blob)
+        for (const pair of response.headers.entries()) {
+            console.log(`${pair[0]}: ${pair[1]}`)
+        }
+        
+        const image = (await response.formData()).get('image') as Blob
+        console.log(image)
+        preview.src = URL.createObjectURL(image)
         cancel()
     }
 

@@ -25,7 +25,9 @@ const config = {
                 "connect-src": [
                     'self',
                     'data:',
-                    'https://lamy-tools-api.vercel.app',
+                    'http://localhost:3000',
+                    'http://0.0.0.0:3000',
+                    'https://lamy-tools.onrender.com',
                 ],
                 "frame-src": [
                     'self',
@@ -40,6 +42,7 @@ const config = {
                 "img-src": [
                     'self',
                     'data:',
+                    'blob:',
                 ],
             }
         }
