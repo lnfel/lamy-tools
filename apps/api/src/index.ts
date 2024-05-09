@@ -1,11 +1,17 @@
 import { Elysia, t } from "elysia"
 import { cors } from '@elysiajs/cors'
 import { staticPlugin } from '@elysiajs/static'
-import sharp from "sharp"
+import routes from "./routes"
 
-export const app = new Elysia()
+export const app = new Elysia({ name: 'app' })
     .use(await staticPlugin())
     .use(cors())
+    .use(routes)
+    .get('/health', () => {
+        return {
+            message: 'Lamy is healthy!'
+        }
+    })
     .get("/", async ({ set }) => {
         const image = Bun.file('public/suisei_august_2023.webp')
         // const imageSharp = await sharp(await image.arrayBuffer())

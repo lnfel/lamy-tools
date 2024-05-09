@@ -7,6 +7,7 @@
   },
   "main": "./src/index.ts",
   "devDependencies": {
+    "@types/node": "^20.12.11",
     "bun-types": "latest"
   },
   "module": "src/index.js",
