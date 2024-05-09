@@ -1,0 +1,11 @@
+{
+    "name": "tsconfig",
+    "version": "0.0.0",
+    "private": true,
+    "dependencies": {
+        "bun-types": "latest"
+    },
+    "files": [
+        "base.json"
+    ]
+}

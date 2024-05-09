@@ -1,10 +1,10 @@
 {
-    "$schema": "https://json.schemastore.org/tsconfig",
+    "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/tsconfig.json",
     "display": "Default",
     "compilerOptions": {
-        "lib": [
-            "DOM"
-        ],
+        "target": "ESNext", 
+        "module": "ESNext",
+        "resolveJsonModule": true,
         "composite": false,
         "declaration": true,
         "declarationMap": true,
@@ -12,7 +12,7 @@
         "forceConsistentCasingInFileNames": true,
         "inlineSources": false,
         "isolatedModules": true,
-        "moduleResolution": "node",
+        "moduleResolution": "Bundler",
         "noUnusedLocals": false,
         "noUnusedParameters": false,
         "preserveWatchOutput": true,

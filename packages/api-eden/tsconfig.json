@@ -1,0 +1,26 @@
+{
+    "extends": "tsconfig/base.json",
+    "compilerOptions": {
+        "composite": true,
+        "paths": {
+            "api": [
+                "../../apps/api/src/index.ts"
+            ]
+        },
+        "stripInternal": true
+    },
+    "include": [
+        "./src/**/*.ts",
+        "./node_modules/@elysiajs/eden/dist/types-DcP_1Cpm"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+    "references": [
+        { "path": "../../apps/api" }
+    ],
+    "files": [
+        "src/index.ts",
+        "src/eden.ts"
+    ]
+}

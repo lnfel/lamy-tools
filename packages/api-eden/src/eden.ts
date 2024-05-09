@@ -9,6 +9,14 @@ export class LamyAPI {
         this.domain = domain
     }
 
+    /**
+     * [TS Bug SOLVED]: Set "stripInternal": true in tsconfig compilerOptions
+     * https://github.com/typescript-eslint/typescript-eslint/issues/7605#issuecomment-1732471255
+     * 
+     * Fixes https://github.com/microsoft/TypeScript/issues/47663
+     * 
+     * @internal
+     */
     edenTreaty() {
         return edenTreaty<App>(this.domain)
     }
@@ -22,6 +30,14 @@ export class LamyAPI {
     }
 }
 
+/**
+ * [TS Bug SOLVED]: Set "stripInternal": true in tsconfig compilerOptions
+ * https://github.com/typescript-eslint/typescript-eslint/issues/7605#issuecomment-1732471255
+ * 
+ * Fixes https://github.com/microsoft/TypeScript/issues/47663
+ * 
+ * @internal
+ */
 export const api = edenTreaty<App>('http://localhost:3000/')
 // export const api = treaty(app)
 // export const api = {}
