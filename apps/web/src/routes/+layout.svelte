@@ -19,6 +19,11 @@
                 Upload test
             </a>
         </li>
+        <li>
+            <a href="/convert-image" class="px-2 py-1 text-indigo-500 outline-none hover:underline focus:underline">
+                Convert Image
+            </a>
+        </li>
     </ul>
 </header>
 
