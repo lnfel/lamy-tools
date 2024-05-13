@@ -25,24 +25,36 @@ const config = {
                 "connect-src": [
                     'self',
                     'data:',
+                    'blob:',
                     'http://localhost:3000',
                     'http://0.0.0.0:3000',
                     'https://lamy-tools.onrender.com',
+                    'https://cdn.emulatorjs.org',
+                    'https://allancoding-files.netlify.app',
+                    'https://static.playemulator.com',
                 ],
                 "frame-src": [
                     'self',
+                    'https://demo.emulatorjs.org',
                 ],
                 "script-src": [
                     'self',
+                    'unsafe-eval',
+                    'blob:',
+                    'https://cdn.emulatorjs.org',
                 ],
                 "style-src": [
                     'self',
                     'unsafe-inline',
+                    'https://cdn.emulatorjs.org',
                 ],
                 "img-src": [
                     'self',
                     'data:',
                     'blob:',
+                    'https://www.zeldadungeon.net',
+                    'https://assets-prd.ignimgs.com',
+                    'https://m.media-amazon.com',
                 ],
             }
         }
