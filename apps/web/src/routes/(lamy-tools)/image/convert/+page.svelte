@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { enhance } from '$app/forms'
     // import { api } from 'api-eden'
-	import { api } from '../../lib/lamy-api/index'
+	import { api } from '../../../../lib/lamy-api/index'
 
 	import type { SubmitFunction } from '@sveltejs/kit'
 
     const formatOptions = ['PNG', 'WEBP', 'JPEG']
 
 	const upload: SubmitFunction = async ({ formData, cancel }) => {
-		const response = (await api['convert-image'].post({
+		const response = (await api.image.convert.post({
 			getRaw: true,
 			data: formData.getAll('image') as unknown as File | FileList,
             $query: {

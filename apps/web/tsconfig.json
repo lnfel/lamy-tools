@@ -22,7 +22,7 @@
     ],
     "files": [
         "src/lib/lamy-api/index.ts",
-        "src/routes/convert-image/+page.svelte"
+        "src/routes/(lamy-tools)/image/convert/+page.svelte"
     ]
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
 	//
