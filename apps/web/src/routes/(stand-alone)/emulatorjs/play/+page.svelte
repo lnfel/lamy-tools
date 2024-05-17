@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { page } from "$app/stores"
     import { onMount } from "svelte"
 	import type { PageData } from "./$types"
 
@@ -26,7 +25,7 @@
         /**
          * @see {@link https://emulatorjs.org/docs/options#ejs_debug_xx | EJS_DEBUG_XX}
          */
-        (window as EmulatorJS.GlobalWindow).EJS_DEBUG_XX = true;
+        (window as EmulatorJS.GlobalWindow).EJS_DEBUG_XX = false;
         /**
          * System to be emulated
          * @see {@link https://emulatorjs.org/docs/options#ejs_core | EJS_core}
