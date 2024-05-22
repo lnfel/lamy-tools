@@ -1,22 +1,29 @@
 <script lang="ts">
 	import { enhance } from '$app/forms'
     // import { api } from 'api-eden'
-	import { api } from '../../../../lib/lamy-api/index'
+	import { api, apiTreaty } from '../../../../lib/lamy-api/index.js'
+    import type { ImageFormatSchema } from 'api/src/types/schema'
 
 	import type { SubmitFunction } from '@sveltejs/kit'
 
     const formatOptions = ['PNG', 'WEBP', 'JPEG']
 
 	const upload: SubmitFunction = async ({ formData, cancel }) => {
+        formData.delete('format')
+
 		const response = (await api.image.convert.post({
 			getRaw: true,
-			data: formData.getAll('image') as unknown as File | FileList,
+            // $fetch: {
+            //     mode: 'no-cors', // We get wrong MIME-TYPE when we have mode enabled or $fetch assigned...
+            //     // body: formData
+            // },
+			image: formData.getAll('image') as unknown as File | FileList,
             $query: {
-                format: format.value 
-            }
+                format: format.value as typeof ImageFormatSchema.static
+            },
 		})) as unknown as Response;
 
-		const images = (await response.formData()).getAll('image') as Blob[];
+		const images = (await response.formData()).getAll('image') as File[];
         images.forEach((image) => {
             previews = [
                 ...previews,
@@ -26,11 +33,21 @@
                 }
             ]
         })
-		console.log({
-			images
-		});
-		cancel();
-	};
+		// console.log({
+		// 	images
+		// })
+
+        // https://github.com/elysiajs/eden/issues/95
+        // const { data, response } = await apiTreaty.image.convert.post({
+        //     image: formData.getAll('image') as unknown as File | FileList
+        // }, {
+        //     query: {
+        //         format: format.value as typeof ImageFormatSchema.static
+        //     },
+        // })
+        // console.log({ data })
+		cancel()
+	}
 
     let format: HTMLSelectElement
     let previews: { name: string, src: string }[] = []

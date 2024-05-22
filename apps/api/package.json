@@ -16,7 +16,7 @@
     "@elysiajs/static": "^1.0.3",
     "@elysiajs/swagger": "^1.0.5",
     "@sinclair/typebox": "^0.32.30",
-    "elysia": "1.0.15",
+    "elysia": "1.0.21",
     "sharp": "^0.33.3"
   }
 }

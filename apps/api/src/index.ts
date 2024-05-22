@@ -1,11 +1,35 @@
 import { Elysia, t } from "elysia"
 import { cors } from '@elysiajs/cors'
+import { swagger } from '@elysiajs/swagger'
 import { staticPlugin } from '@elysiajs/static'
 import routes from "./routes"
+import config from "./lib/config"
 
 export const app = new Elysia({ name: 'app' })
     .use(await staticPlugin())
-    .use(cors())
+    .use(swagger({
+        path: '/docs',
+        documentation: {
+            tags: [
+                { name: 'Image', description: 'Endpoints for processing images.' }
+            ]
+        }
+    }))
+    .use(cors({
+        // origin: ({ headers }) => {
+        //     console.log({
+        //         origin: headers.get('Origin'),
+        //         app_url: config.app_url
+        //     })
+        //     return headers.get('Origin') === config.app_url
+        // },
+        origin: config.app_url.replace('http://', ''),
+        credentials: true,
+        allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin'],
+        exposedHeaders: '*',
+        methods: '*',
+        preflight: true
+    }))
     .use(routes)
     .get('/health', () => {
         return {

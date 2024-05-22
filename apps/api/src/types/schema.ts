@@ -1,5 +1,9 @@
 import { t } from "elysia"
-// import { Static } from "elysia"
+import { ElysiaType } from "elysia/type-system"
+import { TypeSystem } from '@sinclair/typebox/system'
+import { TUnsafe, TSchema } from '@sinclair/typebox'
+
+export const FormDataType = TypeSystem.Type('FormData', (options, value) => value instanceof FormData)
 
 /**
  * Typescript const assertion
@@ -15,8 +19,8 @@ export type ImageFormat = typeof imageFormats[number]
  */
 // export const ImageFormatSchema = t.Union(imageFormats.map((value) => t.Literal(value)))
 export const ImageFormatSchema = t.Union([
-    t.Literal("png"),
-    t.Literal("jpg"),
-    t.Literal("jpeg"),
-    t.Literal("webp")
+    t.Literal("png", { default: 'png' }),
+    t.Literal("jpg", { default: 'jpg' }),
+    t.Literal("jpeg", { default: 'jpeg' }),
+    t.Literal("webp", { default: 'webp' })
 ])
