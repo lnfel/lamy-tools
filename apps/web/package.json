@@ -26,7 +26,8 @@
         "@elysiajs/eden": "^1.0.13",
         "@repo/ui": "workspace:*",
         "api": "workspace:*",
-        "api-eden": "workspace:*"
+        "api-eden": "workspace:*",
+        "short-unique-id": "^5.2.0"
     },
     "devDependencies": {
         "@melt-ui/pp": "^0.3.2",

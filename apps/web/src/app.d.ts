@@ -19,6 +19,14 @@ declare global {
             EJS_DEBUG_XX: boolean
         }
     }
+    namespace RGMTSI {
+        type Quotation = {
+            id: string
+            company: string
+            tags: string[]
+            created_at: Date
+        }
+    }
 
     // not really sure where to put this
     // people recommend to put this in a global.d.ts without any export but it seems a hassle
