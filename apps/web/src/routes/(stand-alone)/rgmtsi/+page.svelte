@@ -280,6 +280,7 @@
         <ul class="list-disc pl-8">
             <li>Filter using a combination of company name and tag</li>
             <li>List documents that are created within a date range. Note: This feature is currently separate from search and tag filter.</li>
+            <li>Linking to a document for viewing, try clicking one of the items.</li>
         </ul>
         <p class="max-w-[60ch] text-pretty">There are many ways to query for document, we can store details such as contact person or the related equipment name and model as reference.</p>
     </div>
