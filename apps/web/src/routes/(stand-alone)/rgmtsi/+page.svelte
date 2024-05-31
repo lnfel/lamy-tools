@@ -210,7 +210,7 @@
             usedSpace: `${(Number(usage) / Number(quota) * 100).toFixed(2)}%`
         })
 
-        // window.indexedDB.deleteDatabase('RGMTSI-demo')
+        window.indexedDB.deleteDatabase('RGMTSI-demo')
 
         const request = window.indexedDB.open('RGMTSI-demo', 1)
         request.onupgradeneeded = async (event) => {
