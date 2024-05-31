@@ -273,7 +273,7 @@
     // }
 </script>
 
-<main class="h-screen overflow-hidden bg-slate-300 text-slate-800 px-4 py-6 space-y-6">
+<main class="h-screen bg-slate-300 text-slate-800 px-4 py-6 space-y-6">
     <div class="space-y-6">
         <h1 class="text-2xl">RGMTSI - Proof of concept for cloud-based file management</h1>
         <p class="max-w-[60ch] text-pretty">This demo showcases core features of the proposed cloud-based application. This is just a propotype and does not reflect the final product. Right now the app can only do the following:</p>
