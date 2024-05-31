@@ -4,6 +4,11 @@
     import { onMount } from 'svelte'
     import ShortUniqueId from 'short-unique-id'
 
+    import DateRange from '$lib/rgmtsi/DateRange.svelte'
+    import { getLocalTimeZone } from '@internationalized/date'
+    import type { DateValue } from '@internationalized/date'
+    import type { DateRange as DateRangeType } from '@melt-ui/svelte'
+
     /**
      * https://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-bytes-to-kb-mb-gb-in-javascript
      */
@@ -21,15 +26,59 @@
      * https://stackoverflow.com/questions/66085763/why-currenttarget-value-is-null
      */
     function search(event: Event & { currentTarget: EventTarget & HTMLInputElement }) {
-        searchTerm = event.currentTarget.value 
-        searchFiltered = searchTerm
-            ? quotations.filter((item) => item.company.toLowerCase().includes(searchTerm.toLowerCase()))
-            : quotations
-        result = searchFiltered
+        searchTerm = event.currentTarget.value.toLowerCase()
+
+        if (!start && !end && tagFilter.value === "") {
+            searchFiltered = searchTerm
+                ? quotations.reduce((accumulator: RGMTSI.Quotation[], currentvalue) => {
+                    if (currentvalue.company.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        accumulator.push(currentvalue)
+                    }
+                    return accumulator
+                }, [])
+                : quotations
+            result = searchFiltered
+        }
+
+        // if (start && end) {
+        //     searchFiltered = searchTerm
+        //         ? dateFiltered.reduce((accumulator: RGMTSI.Quotation[], currentvalue) => {
+        //             if (currentvalue.company.toLowerCase().includes(searchTerm.toLowerCase())) {
+        //                 accumulator.push(currentvalue)
+        //             }
+        //             return accumulator
+        //         }, [])
+        //         : dateFiltered
+        //     result = searchFiltered
+        // }
+
+        if (tagFilter.value !== "") {
+            searchFiltered = searchTerm
+                ? tagFiltered.reduce((accumulator: RGMTSI.Quotation[], currentvalue) => {
+                    if (currentvalue.company.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        accumulator.push(currentvalue)
+                    }
+                    return accumulator
+                }, [])
+                : tagFiltered
+            result = searchFiltered
+        }
     }
 
     function filterByTag(event: Event & { currentTarget: EventTarget & HTMLSelectElement }) {
         const tag = event.currentTarget.value
+        if (!start && !end && !searchTerm) {
+            tagFiltered = tag
+                ? quotations.reduce((accumulator: RGMTSI.Quotation[], currentvalue) => {
+                    if (currentvalue.tags.includes(tag)) {
+                        accumulator.push(currentvalue)
+                    }
+                    return accumulator
+                }, [])
+                : quotations
+            result = tagFiltered
+        }
+
         if (searchTerm) {
             tagFiltered = tag
                 ? searchFiltered.reduce((accumulator: RGMTSI.Quotation[], currentvalue) => {
@@ -40,12 +89,19 @@
                 }, [])
                 : searchFiltered
             result = tagFiltered
-        } else {
-            tagFiltered = tag
-                ? quotations.filter((item) => item.tags.includes(tag))
-                : quotations
-            result = tagFiltered
         }
+        
+        // if (start && end) {
+        //     tagFiltered = tag
+        //         ? dateFiltered.reduce((accumulator: RGMTSI.Quotation[], currentvalue) => {
+        //             if (currentvalue.tags.includes(tag)) {
+        //                 accumulator.push(currentvalue)
+        //             }
+        //             return accumulator
+        //         }, [])
+        //         : dateFiltered
+        //     result = tagFiltered
+        // }
     }
 
     function resetTagFilter(event: Event & { currentTarget: EventTarget & HTMLButtonElement }) {
@@ -53,15 +109,64 @@
         tagFilter.dispatchEvent(new Event('change'))
     }
 
-    let db,
+    function filterByDate({ detail: { start, end } }: CustomEvent<DateRangeType>) {
+        const startDate = start?.toDate(getLocalTimeZone())
+        const endDate = end?.toDate(getLocalTimeZone())
+        endDate?.setHours(24)
+        // if (searchTerm) {
+        //     dateFiltered = startDate && endDate
+        //         ? searchFiltered.reduce((accumulator: RGMTSI.Quotation[], currentvalue) => {
+        //             if (currentvalue.created_at >= startDate && currentvalue.created_at <= endDate) {
+        //                 accumulator.push(currentvalue)
+        //             }
+        //             return accumulator
+        //         }, [])
+        //         : searchFiltered
+        //     result = dateFiltered
+        // } else if (tagFilter.value && searchTerm === "") {
+        //     dateFiltered = startDate && endDate
+        //         ? tagFiltered.reduce((accumulator: RGMTSI.Quotation[], currentvalue) => {
+        //             if (currentvalue.created_at >= startDate && currentvalue.created_at <= endDate) {
+        //                 accumulator.push(currentvalue)
+        //             }
+        //             return accumulator
+        //         }, [])
+        //         : tagFiltered
+        //     result = dateFiltered
+        // } else {
+            dateFiltered = startDate && endDate
+                ? quotations.reduce((accumulator: RGMTSI.Quotation[], currentvalue) => {
+                    console.log({
+                        created_at: currentvalue.created_at,
+                        start: startDate,
+                        end: endDate
+                    })
+                    if (currentvalue.created_at >= startDate && currentvalue.created_at <= endDate) {
+                        accumulator.push(currentvalue)
+                    }
+                    return accumulator
+                }, [])
+                : quotations
+            result = dateFiltered
+        // }
+        console.log({
+            start: start?.toString(),
+            end: end?.toString()
+        })
+    }
+
+    let db: IDBDatabase,
         quotations: RGMTSI.Quotation[] = [],
         searchTerm = "",
         searchFiltered: RGMTSI.Quotation[] = [],
         tagFiltered: RGMTSI.Quotation[] = [],
+        dateFiltered: RGMTSI.Quotation[] = [],
         tags: string[] = [],
         cacheData: RGMTSI.Quotation[] = [],
         result: RGMTSI.Quotation[] = [];
     let tagFilter: HTMLSelectElement;
+    let start: DateValue | undefined,
+        end: DateValue | undefined;
 
     /**
      * https://medium.com/@KevinBGreene/type-safe-indexeddb-using-typescript-declarative-schema-and-codegen-8708f16ca374
@@ -73,13 +178,19 @@
                 id: uid.rnd(),
                 company: 'Oleo-Fats',
                 tags: ['Baking Equipment'],
-                created_at: new Date()
+                created_at: new Date('2024-05-27')
             },
             {
                 id: uid.rnd(),
                 company: 'Universal Robina',
                 tags: ['Mixing Equipment', 'Freezer'],
-                created_at: new Date()
+                created_at: new Date('2024-05-28')
+            },
+            {
+                id: uid.rnd(),
+                company: 'Goldilocks',
+                tags: ['Baking Equipment', 'Freezer'],
+                created_at: new Date('2024-05-28')
             }
         ]
 
@@ -165,11 +276,17 @@
 <main class="h-screen overflow-hidden bg-slate-300 text-slate-800 px-4 py-6 space-y-6">
     <div class="space-y-6">
         <h1 class="text-2xl">RGMTSI - Proof of concept for cloud-based file management</h1>
-        <p>This demo showcases core features of the proposed cloud-based application.</p>
+        <p class="max-w-[60ch] text-pretty">This demo showcases core features of the proposed cloud-based application. This is just a propotype and does not reflect the final product. Right now the app can only do the following:</p>
+        <ul class="list-disc pl-8">
+            <li>Filter using a combination of company name and tag</li>
+            <li>List documents that are created within a date range. Note: This feature is currently separate from search and tag filter.</li>
+        </ul>
+        <p class="max-w-[60ch] text-pretty">There are many ways to query for document, we can store details such as contact person or the related equipment name and model as reference.</p>
     </div>
 
     <div class="flex flex-col xl:flex-row gap-4">
-        <form class="xl:w-3/12 space-y-2">
+        <!-- xl:w-3/12 -->
+        <form class="space-y-2">
             <div>
                 <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                 <div class="relative">
@@ -195,20 +312,27 @@
                     Reset
                 </button>
             </div>
+
+            <div>Filter by date range</div>
+            <div class="flex justify-center xl:justify-start">
+                <DateRange bind:start bind:end on:change={filterByDate} />
+            </div>
         </form>
 
         <div class="flex-grow space-y-4">
             {#each result as q}
                 <!-- hour12: true, hour: '2-digit', minute: '2-digit' -->
-                <div class="px-4 py-3.5 bg-gray-50 rounded-lg space-y-2">
-                    <div>{ q.company }</div>
-                    <div class="flex flex-wrap gap-2">
-                        {#each q.tags as tag}
-                            <span class="text-sm bg-sky-700 text-white rounded px-1 py-0.5">{ tag }</span>
-                        {/each}
+                <a target="_blank" class="block" href="https://docs.google.com/document/d/1Cdjh8godvy4azmnmkIUbE5hW56rXMIvD_ORMg1O5Gm8/edit?usp=sharing">
+                    <div class="px-4 py-3.5 bg-gray-50 rounded-lg space-y-2">
+                        <div>{ q.company }</div>
+                        <div class="flex flex-wrap gap-2">
+                            {#each q.tags as tag}
+                                <span class="text-sm bg-sky-700 text-white rounded px-1 py-0.5">{ tag }</span>
+                            {/each}
+                        </div>
+                        <span class="block text-xs">Created at { q.created_at.toLocaleString('en-CA', {timeZone: 'Asia/Manila', year: 'numeric', month: 'numeric', day: 'numeric'}).toUpperCase().replaceAll(/(,)|([.])/g, '') }</span>
                     </div>
-                    <span class="block text-xs">Created at { q.created_at.toLocaleString('en-CA', {timeZone: 'Asia/Manila', year: 'numeric', month: 'numeric', day: 'numeric'}).toUpperCase().replaceAll(/(,)|([.])/g, '') }</span>
-                </div>
+                </a>
             {/each}
         </div>
     </div>
