@@ -21,8 +21,22 @@ export class LamyAPI {
         return edenTreaty<App>(this.domain)
     }
 
+    /**
+     * 
+     * @internal
+     */
     treaty() {
-        return treaty2<App>(this.domain.replace('http://', '').replace('https://', ''))
+        return treaty2<App>(this.domain.replace('http://', '').replace('https://', ''), {
+            async onResponse(response) {
+                const contentType = response.headers.get('Content-Type')
+                if (contentType?.includes('multipart/form-data')) {
+                    const formData = await response.formData()
+                    if (formData.has('image')) {
+                        return formData.getAll('image')
+                    }
+                }
+            }
+        })
     }
 
     /**
