@@ -9,7 +9,13 @@ export const FormDataType = TypeSystem.Type('FormData', (options, value) => valu
  * Typescript const assertion
  */
 export const imageFormats = ["png", "jpg", "jpeg", "webp"] as const
-export type ImageFormat = typeof imageFormats[number]
+// export type ImageFormat = typeof imageFormats[number]
+export enum ImageFormat {
+    png = "png",
+    jpg = "jpg",
+    jpeg = "jpeg",
+    webp = "webp"
+}
 // alternative using typebox
 // type s = Static<typeof ImageFormatSchema>
 
@@ -18,9 +24,12 @@ export type ImageFormat = typeof imageFormats[number]
  * https://github.com/sinclairzx81/typebox/issues/105#issuecomment-917385119
  */
 // export const ImageFormatSchema = t.Union(imageFormats.map((value) => t.Literal(value)))
-export const ImageFormatSchema = t.Union([
-    t.Literal("png", { default: 'png' }),
-    t.Literal("jpg", { default: 'jpg' }),
-    t.Literal("jpeg", { default: 'jpeg' }),
-    t.Literal("webp", { default: 'webp' })
-])
+// export const ImageFormatSchema = t.Union([
+//     t.Literal("png", { default: 'png' }),
+//     t.Literal("jpg", { default: 'jpg' }),
+//     t.Literal("jpeg", { default: 'jpeg' }),
+//     t.Literal("webp", { default: 'webp' })
+// ], {
+//     default: "png"
+// })
+export const ImageFormatSchema = t.Enum(ImageFormat, { default: ImageFormat.png, description: "Conversion format, defaults to png." })
