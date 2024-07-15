@@ -26,7 +26,7 @@ export const app = new Elysia({ name: 'app' })
         origin: config.app_url.replace('http://', ''),
         credentials: true,
         allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin'],
-        exposedHeaders: '*',
+        exposeHeaders: '*',
         methods: '*',
         preflight: true
     }))
