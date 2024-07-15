@@ -11,12 +11,12 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@elysiajs/eden": "^1.0.13"
+        "@elysiajs/eden": "^1.0.14"
     },
     "devDependencies": {
         "api": "workspace:*",
-        "elysia": "^1.0.21",
-        "eslint": "^8.57.0",
+        "elysia": "^1.0.27",
+        "eslint": "^9.7.0",
         "tsconfig": "workspace:*"
     }
 }
