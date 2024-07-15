@@ -10,6 +10,15 @@
 
 	const upload: SubmitFunction = async ({ formData, cancel }) => {
         formData.delete('format')
+        // const treatyResponse = await apiTreaty.image.convert.post({
+        //     image: formData.getAll('image') as unknown as File | FileList
+        // }, {
+        //     query: {
+        //         format: format.value as typeof ImageFormatSchema.static
+        //     }
+        // })
+
+        // console.log(treatyResponse.data)
 
 		const response = (await api.image.convert.post({
 			getRaw: true,
