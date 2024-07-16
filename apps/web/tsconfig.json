@@ -21,10 +21,10 @@
             "path": "../api"
         }
     ],
-    // "files": [
-    //     "src/lib/lamy-api/index.ts",
-    //     "src/routes/(lamy-tools)/image/convert/+page.svelte"
-    // ]
+    "files": [
+        "src/lib/lamy-api/index.ts",
+        "src/routes/(lamy-tools)/image/convert/+page.svelte"
+    ]
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
 	//
 	// If you want to overwrite includes/excludes, make sure to copy over the relevant includes/excludes

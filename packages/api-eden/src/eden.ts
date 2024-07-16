@@ -7,9 +7,12 @@
  * @see {@link https://medium.com/@tobygstimpson/typescript-classes-access-modifiers-50900176dd57 | TypeScript Classes — Access Modifiers}
  * 
  * Solution is to install @elysiajs/eden in api workspace and import from there using relative path >.<
+ * ../../../apps/api/node_modules/@elysiajs/eden
  */
-import { edenTreaty, edenFetch, treaty as treaty2 } from '../../../apps/api/node_modules/@elysiajs/eden'
+import { edenTreaty, edenFetch, treaty as treaty2 } from '@elysiajs/eden'
 import type { App } from 'api'
+import type {} from 'api/src/types/schema'
+import type {} from '@elysiajs/eden/treaty'
 
 export class LamyAPI {
     domain
@@ -25,13 +28,36 @@ export class LamyAPI {
      * ```
      * One of the solution is to type annotate the thing:
      * https://github.com/microsoft/TypeScript/issues/47663#issuecomment-1519138189
+     * : ReturnType<typeof edenTreaty<App>>
+     * 
+     * [TS Bug SOLVED]: Set "stripInternal": true in tsconfig compilerOptions
+     * https://github.com/typescript-eslint/typescript-eslint/issues/7605#issuecomment-1732471255
+     * 
+     * Fixes https://github.com/microsoft/TypeScript/issues/47663
+     * 
+     * @internal
      */
-    edenTreaty(): ReturnType<typeof edenTreaty<App>> {
+    edenTreaty() {
+        //@ts-ignore
         return edenTreaty<App>(this.domain)
     }
 
     treaty() {
+        //@ts-ignore
         return treaty2<App>(this.domain.replace('http://', '').replace('https://', ''), {
+            async onRequest(path, options) {
+                if (path.startsWith('/image/convert')) {
+                    console.log({
+                        path,
+                        options
+                    })
+
+                    if (options.body instanceof FormData) {
+                        console.log(options.body.getAll('image'))
+                    }
+                    // console.log(options.body?.image?.getAll('image'))
+                }
+            },
             async onResponse(response) {
                 const contentType = response.headers.get('Content-Type')
                 if (contentType?.includes('multipart/form-data')) {
@@ -54,8 +80,11 @@ export class LamyAPI {
      * 
      * One of the solution is to type annotate the thing:
      * https://github.com/microsoft/TypeScript/issues/47663#issuecomment-1519138189
+     * 
+     * : ReturnType<typeof edenFetch<App>>
      */
-    fetch(): ReturnType<typeof edenFetch<App>> {
+    fetch() {
+        //@ts-ignore
         return edenFetch<App>(this.domain)
     }
 }
@@ -70,8 +99,13 @@ export class LamyAPI {
  * 
  * One of the solution is to type annotate the thing:
  * https://github.com/microsoft/TypeScript/issues/47663#issuecomment-1519138189
+ * 
+ * : ReturnType<typeof edenTreaty<App>>
+ * 
  */
-export const api: ReturnType<typeof edenTreaty<App>> = edenTreaty<App>('http://localhost:3000/')
+//@ts-ignore
+export const api = edenTreaty<App>('http://localhost:3000/')
+//@ts-ignore
 export const treaty = treaty2<App>('localhost:3000')
 /**
  * [TS Bug SOLVED]: Set "stripInternal": true in tsconfig compilerOptions
@@ -83,5 +117,8 @@ export const treaty = treaty2<App>('localhost:3000')
  * 
  * One of the solution is to type annotate the thing:
  * https://github.com/microsoft/TypeScript/issues/47663#issuecomment-1519138189
+ * 
+ * : ReturnType<typeof edenFetch<App>>
  */
-export const fetch: ReturnType<typeof edenFetch<App>> = edenFetch<App>('http://localhost:3000/')
+//@ts-ignore
+export const fetch = edenFetch<App>('http://localhost:3000/')

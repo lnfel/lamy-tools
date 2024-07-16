@@ -117,7 +117,8 @@
     },
     "include": [
         "src/**/*.ts",
-        "src/types/global.d.ts"
+        "src/types/global.d.ts",
+        "src/types/schema.ts"
     ],
     "exclude": [
         "node_modules/**"
