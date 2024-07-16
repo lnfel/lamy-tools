@@ -1,6 +1,6 @@
 import type {} from "@elysiajs/eden"
 import { LamyAPI } from "api-eden"
-// import config from "$lib/config"
+import config from "$lib/config"
 
 /**
  * https://github.com/microsoft/TypeScript/issues/47663#issuecomment-1270716220
@@ -18,8 +18,8 @@ import { LamyAPI } from "api-eden"
  * 
  * @internal
  */
-export const api = new LamyAPI("http://localhost:3000/")
+export const api = new LamyAPI(config.lamy_api.baseURL)
     .edenTreaty()
 
-export const treaty = new LamyAPI("http://localhost:3000/")
+export const treaty = new LamyAPI(config.lamy_api.baseURL)
     .treaty()
