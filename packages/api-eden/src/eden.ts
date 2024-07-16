@@ -6,9 +6,9 @@
  * Possibly due to private class property named dependencies cannot be compared as equal between two separate class instances.
  * @see {@link https://medium.com/@tobygstimpson/typescript-classes-access-modifiers-50900176dd57 | TypeScript Classes — Access Modifiers}
  * 
- * Fixed by re-installing api workspace via `pnpm add api`
+ * Solution is to install @elysiajs/eden in api workspace and import from there using relative path >.<
  */
-import { edenTreaty, edenFetch, treaty as treaty2 } from '@elysiajs/eden'
+import { edenTreaty, edenFetch, treaty as treaty2 } from '../../../apps/api/node_modules/@elysiajs/eden'
 import type { App } from 'api'
 
 export class LamyAPI {
