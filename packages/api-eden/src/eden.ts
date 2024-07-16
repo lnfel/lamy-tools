@@ -1,5 +1,12 @@
-import { edenTreaty, edenFetch, treaty as treaty2 } from '@elysiajs/eden'
-// import { app } from 'api'
+/**
+ * For some reason importing methods from @elysiajs/eden causes the following error:
+ * ```md
+ * > Types have separate declarations of a private property 'dependencies'.
+ * ```
+ * Possibly due to private class property named dependencies cannot be compared as equal between two separate class instances.
+ * @see {@link https://medium.com/@tobygstimpson/typescript-classes-access-modifiers-50900176dd57 | TypeScript Classes — Access Modifiers}
+ */
+import { edenTreaty, edenFetch, treaty as treaty2 } from 'api/node_modules/@elysiajs/eden'
 import type { App } from 'api'
 
 export class LamyAPI {
@@ -21,10 +28,6 @@ export class LamyAPI {
         return edenTreaty<App>(this.domain)
     }
 
-    /**
-     * 
-     * @internal
-     */
     treaty() {
         return treaty2<App>(this.domain.replace('http://', '').replace('https://', ''), {
             async onResponse(response) {
@@ -61,8 +64,6 @@ export class LamyAPI {
  * @internal
  */
 export const api = edenTreaty<App>('http://localhost:3000/')
-// export const api = treaty(app)
-// export const api = {}
 export const treaty = treaty2<App>('localhost:3000')
 /**
  * [TS Bug SOLVED]: Set "stripInternal": true in tsconfig compilerOptions
