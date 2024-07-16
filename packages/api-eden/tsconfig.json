@@ -10,8 +10,7 @@
         "stripInternal": true
     },
     "include": [
-        "./src/**/*.ts",
-        "./node_modules/@elysiajs/eden/dist/types-DcP_1Cpm"
+        "./src/**/*.ts"
     ],
     "exclude": [
         "node_modules"
