@@ -1,7 +1,5 @@
 import { t } from "elysia"
-import { ElysiaType } from "elysia/type-system"
 import { TypeSystem } from '@sinclair/typebox/system'
-import { TUnsafe, TSchema } from '@sinclair/typebox'
 
 export const FormDataType = TypeSystem.Type('FormData', (options, value) => value instanceof FormData)
 
